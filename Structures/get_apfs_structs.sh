@@ -7,6 +7,14 @@
 #- Usecase: Have APFS structs in one place, can be used to build tools that parse/mount an APFS volume. 
 #- Language:  bash script
 
+#- APFS Structure documentation: https://developer.apple.com/support/downloads/Apple-File-System-Reference.pdf
+#- To convert this to txt: 
+#-  sudo apt install poppler-utils
+#-  pdftotext Apple-File-System-Reference.pdf (this will create a corresponding .txt file in the working directory)
+
+#!/bin/bash
+
+#- Function to get the enum and struct types in the APFS documentation
 function get_apfs_structs()
 {
         awk '
@@ -128,6 +136,7 @@ function get_apfs_defs()
         }' $filename
 }
 
-filename=apfs.txt
+#- Testing. 
+filename=Apple-File-System-Reference.txt
 #get_apfs_defs
 get_apfs_structs
