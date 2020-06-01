@@ -61,6 +61,7 @@ function get_apfs_structs()
                         {
                                 out_str=out_str " " line
                                 print(out_str)
+                                print("\n")
                                 out_str=""
                         }
                         next
@@ -100,6 +101,11 @@ function get_apfs_defs()
         last_char=substr(line,length(line),1)
 
 
+        #- Ignore blank lines
+        if(line ~ /^$/)
+        {
+                next
+        }
         #- The input line contains the string "#define"
         if(index(line,"#define")!=0)
         {
@@ -136,7 +142,6 @@ function get_apfs_defs()
         }' $filename
 }
 
-#- Testing. 
-filename=Apple-File-System-Reference.txt
-#get_apfs_defs
+filename=apfs.txt
 get_apfs_structs
+get_apfs_defs
