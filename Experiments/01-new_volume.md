@@ -14,8 +14,9 @@ The terms "attach" and "detach" are used to distinguish the way disk images are 
 "Mount" and "unmount" are the parallel filesystems options.  
 
 * As you can see, when attaching the image it has created two disks: _disk3_ and _disk4_. 
-* disk3 represents the image (dmg) that we created. 
-* disk4 is a "synthesized" disk aka the APFS container. 
+* _**disk3**_ represents the image (dmg) that we created. 
+* _**disk4**_ is a "synthesized" disk aka the APFS container. 
+* _**/dev/disk4s1**_ is a volume that has been automatically created under the APFS container (_disk4_). This volume is mounted under _**/Volumes/untitled**_
 
 ```
 hdiutil attach 200mb.apfs.dmg 
@@ -25,15 +26,29 @@ hdiutil attach 200mb.apfs.dmg
 /dev/disk4s1        	41504653-0000-11AA-AA11-0030654	/Volumes/untitled
 ```
 
-## Listing the disks
+## Where is the APFS container?
 
-After attaching, a disk image becomes a disk. Now, you might get confused which is the actual physical disk versus a disk image that is mounted. 
-For that you can use `diskutil list physical` - for listing physical disks and `diskutil list virtual` - for listing virtual disks. 
+* We can run the `mmls` command from The Sleuthkit toolset to get the location of the APFS container inside the dmg file. 
+* In this example, look at row "004" wit the description **disk image**. This is located at an offset of 40 from the beginning of the image. 
+* The offset is given in units of 512-byte sectors (also shown in the output). So the actual offset is 40*512=20480. 
 
-You can see that:
-* disk3 is a disk image (dmg) attached as a disk. 
-* disk4 is an APFS container attached as a disk. 
+```
+mmls ./200mb.apfs.dmg
+GUID Partition Table (EFI)
+Offset Sector: 0
+Units are in 512-byte sectors
 
+      Slot      Start        End          Length       Description
+000:  Meta      0000000000   0000000000   0000000001   Safety Table
+001:  -------   0000000000   0000000039   0000000040   Unallocated
+002:  Meta      0000000001   0000000001   0000000001   GPT Header
+003:  Meta      0000000002   0000000033   0000000032   Partition Table
+004:  000       0000000040   0000409559   0000409520   disk image
+005:  -------   0000409560   0000409599   0000000040   Unallocated
+```
+
+## Additional notes
+* After running , a disk image (dmg) becomes a disk. You can use the diskutil commands with disk3/disk4. Example:  
 ```
 diskutil list disk3
 /dev/disk3 (disk image):
@@ -50,14 +65,9 @@ diskutil list disk4
                                  Physical Store disk3s1
    1:                APFS Volume untitled                24.6 KB    disk4s1
 ```
+* If multiple disk images get mounted as disks, how will you know which of these is the physical disk and which of these is virtual? You can use `diskutil list physical` - for listing physical disks and `diskutil list virtual` - for listing virtual disks. 
 
-
-
-## Listing disks with APFS specific information
-
-Here you can see _disk4_ (the APFS container) has a 24 KB volume inside it. 
-This volume is mounted in _/Volumes/untitled_
-
+* If you want APFS specific information for a disk you can use `diskutil apfs list <diskname>`. Note: This will work only for synthesized disks that are APFS containers. 
 ```
 diskutil apfs list disk3
 disk3 is not an APFS Container
@@ -86,20 +96,7 @@ diskutil apfs list disk4
         FileVault:                 No
 ```
 
-```
-mmls ./200mb.apfs.dmg
-GUID Partition Table (EFI)
-Offset Sector: 0
-Units are in 512-byte sectors
 
-      Slot      Start        End          Length       Description
-000:  Meta      0000000000   0000000000   0000000001   Safety Table
-001:  -------   0000000000   0000000039   0000000040   Unallocated
-002:  Meta      0000000001   0000000001   0000000001   GPT Header
-003:  Meta      0000000002   0000000033   0000000032   Partition Table
-004:  000       0000000040   0000409559   0000409520   disk image
-005:  -------   0000409560   0000409599   0000000040   Unallocated
-```
 
 ```
 file 200mb.apfs.dmg 
