@@ -1,8 +1,4 @@
-hdiutil attach
-hdiutil: attach: missing <image>
-Usage:	hdiutil attach [options] <image>
-	hdiutil attach -help
-(py3) rramshanka-ltm1:tmp rramshankar$ hdiutil attach -help
+hdiutil attach -help
 hdiutil attach: attach disk image
 Usage:	hdiutil attach <image>
 	Device options:
