@@ -1,0 +1,126 @@
+hdiutil create -help
+
+hdiutil create: create a disk image image
+Usage:	hdiutil create <sizespec> <imagepath>
+	Size specifiers:
+	    -size < ?? | ??b | ??k | ??m | ??g | ??t | ??p | ??e >
+	    -sectors <count>
+	    -megabytes <count>
+
+	Image options:
+	    -library <MKDrivers>
+	    -layout <layout>			[GPTSPUD or per -fs]
+		MBRSPUD - Single partition - Master Boot Record Partition Map
+		SPUD - Single partition - Apple Partition Map
+		UNIVERSAL CD - CD/DVD
+		NONE - No partition map
+		GPTSPUD - Single partition - GUID Partition Map
+		SPCD - Single partition - CD/DVD
+		UNIVERSAL HD - Hard disk
+		ISOCD - Single partition - CD/DVD with ISO data
+	    -partitionType <partitionType>	[Apple_HFS or per -fs]
+	    -align <sector alignment>		[8 sectors]
+	    -ov
+
+	Filesystem options:
+	    -fs <filesystem>
+		UDF - Universal Disk Format (UDF)
+		MS-DOS - MS-DOS (FAT)
+		MS-DOS FAT12 - MS-DOS (FAT12)
+		MS-DOS FAT32 - MS-DOS (FAT32)
+		MS-DOS FAT16 - MS-DOS (FAT16)
+		Case-sensitive Journaled HFS+ - Mac OS Extended (Case-sensitive, Journaled)
+		HFS+ - Mac OS Extended
+		Journaled HFS+ - Mac OS Extended (Journaled)
+		Case-sensitive HFS+ - Mac OS Extended (Case-sensitive)
+		ExFAT - ExFAT
+		APFS - APFS
+		Case-sensitive APFS - APFS (Case-sensitive)
+	   -volname <volumename>		["untitled"]
+	   -stretch < ?? | ?b | ??k | ??m | ??g | ??t | ??p | ??e > (HFS+)
+
+	New Blank Image options:
+	    -type <image type>			[UDIF]
+		SPARSEBUNDLE - sparse bundle disk image
+		SPARSE - sparse disk image
+		UDIF - read/write disk image
+		UDTO - DVD/CD master
+	   -[no]spotlight		do (not) create a Spotlight™ index
+
+	Image from Folder options:
+	   -srcfolder <source folder>
+	   -[no]spotlight		do (not) create a Spotlight™ index
+	   -[no]anyowners		do (not) attempt to preserve owners
+	   -[no]skipunreadable		do (not) skip unreadable objects [no]
+	   -[no]atomic		do (not) copy to temp location and then rename [yes]
+	   -srcowners on|off|any|auto [auto]
+	   		on	enable owners on source
+	   		off	disable owners on source
+	   		any	leave owners state on source unchanged
+	   		auto	enable owners if source is a volume
+	   -format <image type>			[UDZO]
+		UDRO - read-only
+		UDCO - compressed (ADC)
+		UDZO - compressed
+		UDBZ - compressed (bzip2)
+		ULFO - compressed (lzfse)
+		UFBI - entire device
+		IPOD - iPod image
+		UDxx - UDIF stub
+		UDSB - sparsebundle
+		UDSP - sparse
+		UDRW - read/write
+		UDTO - DVD/CD master
+		DC42 - Disk Copy 4.2
+		RdWr - NDIF read/write
+		Rdxx - NDIF read-only
+		ROCo - NDIF compressed
+		Rken - NDIF compressed (KenCode)
+		UNIV - hybrid image (HFS+/ISO/UDF)
+		SPARSEBUNDLE - sparse bundle disk image
+		SPARSE - sparse disk image
+		UDIF - read/write disk image
+		UDTO - DVD/CD master
+
+	Image from Device options:
+	Note: Filesystem options (-fs, -volname, -stretch) ignored with -srcdevice
+	   -srcdevice <source dev node, e.g. disk1, disk2s1>
+	   -format <image type>			[UDZO]
+		UDRO - read-only
+		UDCO - compressed (ADC)
+		UDZO - compressed
+		UDBZ - compressed (bzip2)
+		ULFO - compressed (lzfse)
+		UFBI - entire device
+		IPOD - iPod image
+		UDxx - UDIF stub
+		UDSB - sparsebundle
+		UDSP - sparse
+		UDRW - read/write
+		UDTO - DVD/CD master
+		DC42 - Disk Copy 4.2
+		RdWr - NDIF read/write
+		Rdxx - NDIF read-only
+		ROCo - NDIF compressed
+		Rken - NDIF compressed (KenCode)
+	    -segmentSize < ?? | ??b | ??k | ??m | ??g | ??t | ??p | ??e >
+	                 (sectors, bytes, KiB, MiB, GiB, TiB, PiB, EiB)
+
+	Attach options:
+	   -attach			attach image after creation
+
+	Common options:
+	    -encryption <crypto method>
+	    	AES-128 - 128-bit AES encryption (recommended)
+	    	AES-256 - 256-bit AES encryption (more secure, but slower)
+	    -stdinpass
+	    -agentpass
+	    -certificate <path-to-cert-file>
+	    -pubkey <public-key-hash>[,pkh2,...]
+	    -imagekey <key>=<value>
+	    -tgtimagekey <key>=<value>
+	    -plist
+	    -puppetstrings
+	    -verbose
+	    -debug
+	    -quiet
