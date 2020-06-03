@@ -1,6 +1,6 @@
 
 
-## Creating a disk image 
+## Create a disk image 
 * Disk images are data containers that emulate disks.  Like disks, disk images can also be partitioned and formatted.
 * For understanding APFS creating disk images is a flexible option. 
 * The hdiutil command can be used to create/manipulate disk images that have APFS containers inside them. 
@@ -11,14 +11,14 @@ hdiutil create -fs APFS -size 200MB 200mb.apfs
 created: /private/tmp/200mb.apfs.dmg
 ```
 
-## Locating the APFS container inside the image
+## Locate the APFS container inside the image
 * When you run the `hdiutil create` command it will create a disk image. 
 * Inside the disk image you will find an APFS container (because we specified `-fs APFS` option). 
-* To study the APFS data structures, we must first find the location of the APFS container inside the disk image. 
+* Since our goal is to study APFS data structures, we must locate the APFS container inside the disk image. 
 * This can be done using `hdiutil imageinfo` command or the `mmls` command. 
 * Note: If you run the `hdiutil` after attaching the image you will get a `hdiutil: imageinfo failed - Resource temporarily unavailable` error. `mmls` can however be used irrespective of whether the image is attached or detached. 
 
-### Approach 1 - using hdiutil
+### Approach 1 - Using hdiutil
 * The hdiutil output is bit verbose. I am giving a snipped version of the output. 
 * Under the `partitions` section of the output, look at item #4 for details of the APFS container. 
 * The `partition-start` will be a multiple of the sector size (512). The `partition-filesystems` will give the list of volumes under that APFS container. 
@@ -130,11 +130,11 @@ Units are in 512-byte sectors
 005:  -------   0000409560   0000409599   0000000040   Unallocated
 ```
 
-## Attaching the image 
+## Attach the image 
 
 * Attaching means connecting the disk image to the system. 
-* Attaching an image will also automatically mount the containers/volumes inside the image. 
-* In this case we have an APFS container and a volume inside it. These will get auto-mounted. 
+* Attaching an image will also automatically mount the APFS container and the volumes inside the container. 
+* Once a disk image is attached we can create files/directories inside it. 
 
 
 ```
